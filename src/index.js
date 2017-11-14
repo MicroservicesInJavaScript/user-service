@@ -1,12 +1,18 @@
+require("dotenv").config();
+
 const path = require("path");
 const express = require("express");
-const app = express();
-const config = require("./config");
-// Load Controllers
-const users = require("./controllers/users.js");
-const authorities = require("./controllers/authorities.js");
 
-// Api Docs endpoint
+const middleware = require("./middleware");
+const users = require("./controllers/users");
+const authorities = require("./controllers/authorities");
+
+const { PORT } = process.env;
+
+const app = express();
+
+app.use(middleware);
+
 app.use("/docs", express.static(path.join(__dirname, "api-docs")));
 
 // Health check endpoint
@@ -23,6 +29,4 @@ app.delete("/:login", users.remove);
 app.get("/:login", users.read);
 
 // Listen on app port
-app.listen(config.appPort, () =>
-  console.log(`Users API app listening on port ${config.appPort}!`)
-);
+app.listen(PORT, () => console.log(`Users API app listening on port ${PORT}!`));

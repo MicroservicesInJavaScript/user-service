@@ -2,8 +2,5 @@
     "source": {
         "includePattern": ".+\\.js(doc|x)?$",
         "excludePattern": ".+spec.+"
-    },
-    "opts": {
-        "destination": "./src/api-docs"
     }
 }

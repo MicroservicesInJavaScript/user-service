@@ -2,16 +2,17 @@
 FROM node:9.1.0-alpine
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
 # Bundle app source
 COPY . .
 
 # Install the app dependencies
-RUN npm install
+RUN mkdir /logs && \
+  yarn
 
 # Expose the correct port
 EXPOSE 3000
 
 # Run the app
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "run", "dev"]

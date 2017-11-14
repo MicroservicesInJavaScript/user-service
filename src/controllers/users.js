@@ -1,73 +1,87 @@
-const MongoClient = require("mongodb").MongoClient;
-const config = require("../config");
+const { MongoClient } = require("mongodb");
 
-const users = {};
+const { MONGO_URL } = process.env;
 
-users.list = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
-    if (err) throw err;
+const { users } = require("../models");
+const { error } = require("../services/logger");
+
+const endpoint = {};
+
+endpoint.list = (req, res) =>
+  MongoClient.connect(MONGO_URL, (err, db) => {
+    if (err) error(err);
+
     db
-      .collection(config.userCollection)
+      .collection(users)
       .find()
       .toArray((err, result) => {
-        if (err) throw err;
+        if (err) error(err);
+
         res.json(result);
         db.close();
       });
   });
 
-users.read = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
-    if (err) throw err;
+endpoint.read = (req, res) =>
+  MongoClient.connect(MONGO_URL, (err, db) => {
+    if (err) error(err);
     console.log(req.params.login);
+
     db
-      .collection(config.userCollection)
+      .collection(users)
       .find({ login: req.params.login })
       .toArray((err, result) => {
-        if (err) throw err;
+        if (err) error(err);
+
         res.json(result);
         db.close();
       });
   });
 
-users.add = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
-    if (err) throw err;
-    db
-      .collection(config.userCollection)
-      .insert(req.body, function(err2, result) {
-        if (err2) throw err2;
-        res.json(result);
-        db.close();
-      });
+endpoint.add = (req, res) =>
+  MongoClient.connect(MONGO_URL, (err, db) => {
+    if (err) error(err);
+
+    db.collection(users).insert(req.body, function(err2, result) {
+      if (err2) throw err2;
+
+      res.json(result);
+      db.close();
+    });
   });
 
-users.update = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
-    if (err) throw err;
+endpoint.update = (req, res) =>
+  MongoClient.connect(MONGO_URL, (err, db) => {
+    if (err) error(err);
     console.log(req.body.login);
+
     db
-      .collection(config.userCollection)
-      .replaceOne({ login: req.body.login }, req.body, function(err2, result) {
-        if (err2) throw err2;
+      .collection(users)
+      .replaceOne({ login: req.body.login }, req.body, function(
+        replaceError,
+        result
+      ) {
+        if (replaceError) throw replaceError;
+
         res.json(result);
         db.close();
       });
   });
 
-users.remove = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
-    if (err) throw err;
+endpoint.remove = (req, res) =>
+  MongoClient.connect(MONGO_URL, (err, db) => {
+    if (err) error(err);
     console.log(req.params.login);
+
     try {
-      db
-        .collection(config.userCollection)
-        .deleteOne({ login: req.params.login });
+      db.collection(users).deleteOne({ login: req.params.login });
+
       res.status(200).send("OK");
     } catch (e) {
       print(e);
     }
+
     db.close();
   });
 
-module.exports = users;
+module.exports = endpoint;
