@@ -2,9 +2,10 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 
-const config = require("./config");
 const middleware = require("./middleware");
 const users = require("./controllers/users.js");
+
+const { PORT } = process.env;
 
 const app = express();
 
@@ -19,6 +20,4 @@ app.get("/", users.list);
 app.get("/:id", users.read);
 
 // Listen on app port
-app.listen(config.appPort, () =>
-  console.log(`Users API app listening on port ${config.appPort}!`)
-);
+app.listen(PORT, () => console.log(`Users API app listening on port ${PORT}!`));

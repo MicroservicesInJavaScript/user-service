@@ -1,15 +1,16 @@
-const MongoClient = require("mongodb").MongoClient;
+const { MongoClient } = require("mongodb");
 
-const config = require("../config");
 const { error } = require("../services/logger");
+
+const { MONGO_URL, MONGO_COLLECTION } = process.env;
 
 const users = {};
 
 users.list = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
+  MongoClient.connect(MONGO_URL, (err, db) => {
     if (err) error(err);
     db
-      .collection(config.mongoCollection)
+      .collection(MONGO_COLLECTION)
       .find()
       .toArray((err, result) => {
         if (err) error(err);
@@ -19,10 +20,10 @@ users.list = (req, res) =>
   });
 
 users.read = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
+  MongoClient.connect(MONGO_URL, (err, db) => {
     if (err) error(err);
     db
-      .collection(config.mongoCollection)
+      .collection(MONGO_COLLECTION)
       .find({ _id: req.params.id })
       .toArray((err, result) => {
         if (err) error(err);
