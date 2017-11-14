@@ -1,9 +1,14 @@
 {
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "node src/index.js",
+    "test": "jest"
   },
   "dependencies": {
     "express": "^4.16.2",
     "mongodb": "^2.2.33"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1",
+    "mongo-mock": "^2.7.0"
   }
 }
