@@ -8,20 +8,25 @@
     "lint-fix": "eslint ./src/*.js ./src/**/*.js --fix",
     "test": "npm -v"
   },
+  "pre-commit": [
+    "lint-fix",
+    "test"
+  ],
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongodb": "^2.2.33"
   },
   "devDependencies": {
-    "jsdoc": "^3.5.5",
-    "nodemon": "^1.12.1",
     "eslint": "^4.11.0",
     "eslint-config-prettier": "^2.7.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-promise": "^3.6.0",
+    "jsdoc": "^3.5.5",
+    "nodemon": "^1.12.1",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.8.2"
   }
 }
