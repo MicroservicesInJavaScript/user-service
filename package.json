@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "node src/index.js",
+    "build": "docker-compose up -d --build"
   },
   "dependencies": {
     "express": "^4.16.2",
