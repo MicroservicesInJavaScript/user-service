@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "node src/index.js",
+    "dev": "yarn run doc && nodemon src/index.js",
+    "doc": "jsdoc -c .jsdoc src/*",
     "build": "docker-compose up -d --build",
     "teardown": "docker-compose down",
     "lint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
@@ -12,6 +13,8 @@
     "mongodb": "^2.2.33"
   },
   "devDependencies": {
+    "jsdoc": "^3.5.5",
+    "nodemon": "^1.12.1",
     "eslint": "^4.11.0",
     "eslint-config-prettier": "^2.7.0",
     "eslint-plugin-import": "^2.8.0",
