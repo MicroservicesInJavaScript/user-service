@@ -1,9 +1,12 @@
 const express = require('express')
-const app = express()
-const config = require('./config')
 
-// Load Controllers
+const config = require('./config')
+const middleware = require('./middleware')
 const users = require('./controllers/users.js')
+
+const app = express()
+
+app.use(middleware);
 
 // Health check endpoint
 app.get('/status', (req, res) => res.status(200).send('OK'))
