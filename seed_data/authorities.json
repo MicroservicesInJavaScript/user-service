@@ -1,0 +1,10 @@
+[
+  {
+    "_id" : "ROLE_ADMIN",
+    "_class" : "digital.and.monolith.domain.Authority"
+  },
+  {
+    "_id" : "ROLE_USER",
+    "_class" : "digital.and.monolith.domain.Authority"
+  }
+]

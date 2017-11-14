@@ -16,9 +16,13 @@ yarn dev
 
 | Method | Path | Description |
 | --- | --- | --- |
-| GET | /         | Get all users |
-| GET | /:user-id | Get a specific user record |
 | GET | /status   | Get user service status |
+| GET | /         | Get all users |
+| POST | /         | Create a new user |
+| PUT | /         | Update a user |
+| GET | /authorities         | Get all authorities (i.e. roles) for users |
+| GET | /:login | Get a specific user record |
+| DELETE | /:login | Delete a specific user record |
 
 ## API Documentation
 
@@ -34,7 +38,7 @@ Use a JSDoc tag to describe your code
  * @constructor
  * @param {string} title - The title of the book.
  * @param {string} author - The author of the book.
- * @returns {object} book - the instanciated book object
+ * @returns {object} book - the instantiated book object
  */
 function Book(title, author) {
   var book = {};

@@ -1,15 +1,45 @@
 const config = require('../config');
+const { MongoClient } = require("mongodb");
+const { MONGO_URL } = process.env;
+const { users } = require("../models");
+const { error } = require("../services/logger");
 
-const users = {};
+const endpoint = {};
 
-users.list = (req, res, mongoDB) => mongoDB.collection(config.mongoCollection).find().toArray((err, result) => {
+endpoint.list = (req, res, mongoDB) => mongoDB.collection(config.mongoCollection).find().toArray((err, result) => {
+  if (err) throw err
+  res.json(result)
+});
+
+endpoint.read = (req, res, mongoDB) => mongoDB.collection(config.mongoCollection).find({ _id: req.params.id }).toArray((err, result) => {
   if (err) throw err
   res.json(result)
 })
 
-users.read = (req, res, mongoDB) => mongoDB.collection(config.mongoCollection).find({ _id: req.params.id }).toArray((err, result) => {
-  if (err) throw err
-  res.json(result)
-})
+endpoint.add = (req, res, mongoDB) => mongoDB.collection(users).insert(req.body, (err2, result) => {
+  if (err2) throw err2;
+  res.json(result);
+});
 
-module.exports = users;
+endpoint.update = (req, res, mongoDB) => mongoDB.collection(users)
+  .replaceOne({ login: req.body.login }, req.body, (
+    replaceError,
+    result
+  ) => {
+    if (replaceError) throw replaceError;
+
+    res.json(result);
+  });
+
+endpoint.remove = (req, res, mongoDB) => {
+    try {
+        mongoDB.collection(users).deleteOne({ login: req.params.login });
+
+        res.status(200).send("OK");
+    } catch (e) {
+        print(e);
+    }
+
+};
+
+module.exports = endpoint;
