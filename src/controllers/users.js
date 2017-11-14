@@ -75,6 +75,7 @@ endpoint.remove = (req, res) =>
 
     try {
       db.collection(users).deleteOne({ login: req.params.login });
+
       res.status(200).send("OK");
     } catch (e) {
       print(e);

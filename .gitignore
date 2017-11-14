@@ -2,3 +2,4 @@ node_modules
 request-logs
 server-logs
 src/api-docs
+yarn-error.log

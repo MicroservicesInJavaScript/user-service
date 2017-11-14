@@ -17,6 +17,7 @@ endpoint.read = (req, res) =>
       .toArray((err, result) => {
         if (err) error(err);
 
+
         res.json(result);
         db.close();
       });
