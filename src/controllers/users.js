@@ -1,6 +1,7 @@
-const config = require('../config')
+const config = require('../config');
+const MongoClient = require("mongodb").MongoClient;
 
-const users = {}
+const users = {};
 
 users.list = (req, res, mongoDB) => mongoDB.collection(config.mongoCollection).find().toArray((err, result) => {
   if (err) throw err
@@ -12,4 +13,4 @@ users.read = (req, res, mongoDB) => mongoDB.collection(config.mongoCollection).f
   res.json(result)
 })
 
-module.exports = users
+module.exports = users;
