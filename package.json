@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev": "yarn run doc && nodemon src/index.js",
     "doc": "jsdoc -c .jsdoc src/*"
   },
   "dependencies": {
