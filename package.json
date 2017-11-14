@@ -1,9 +1,13 @@
 {
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "node src/index.js",
+    "doc": "jsdoc -c .jsdoc src/*"
   },
   "dependencies": {
     "express": "^4.16.2",
     "mongodb": "^2.2.33"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.5"
   }
 }
