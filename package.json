@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "REQUST_LOGGER_SAVE_LOGS_ENABLE=false node src/index.js"
+    "dev": "node src/index.js"
   },
   "dependencies": {
     "dotenv": "^4.0.0",

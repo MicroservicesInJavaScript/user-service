@@ -10,7 +10,9 @@ const app = express()
 app.use(middleware);
 
 // Health check endpoint
-app.get('/status', (req, res) => res.status(200).send('OK'))
+app.get('/status', (req, res) => {
+  res.status(200).send('OK')
+})
 
 // User APIs
 app.get('/', users.list)
