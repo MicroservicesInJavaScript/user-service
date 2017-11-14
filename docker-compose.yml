@@ -6,10 +6,8 @@ services:
     build: .
     volumes:
       - ./src:/usr/app/src
-      - ./logs:/logs
-    environment:
-      - REQUST_LOGGER_PATH="/logs/request-logs"
-      - SERVER_LOGGER_PATH="/logs/server-logs"
+      - ./request-logs:/usr/app/request-logs
+      - ./server-logs:/usr/app/server-logs
     ports:
       - "3000:3000"
     links:

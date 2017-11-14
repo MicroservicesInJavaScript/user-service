@@ -1,3 +1,4 @@
 node_modules
-logs
+request-logs
+server-logs
 src/api-docs

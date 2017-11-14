@@ -8,7 +8,8 @@ WORKDIR /usr/app
 COPY . .
 
 # Install the app dependencies
-RUN yarn
+RUN mkdir /logs && \
+  yarn
 
 # Expose the correct port
 EXPOSE 3000
