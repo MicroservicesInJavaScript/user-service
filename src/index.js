@@ -20,8 +20,8 @@ app.put('/', users.update)
 
 app.get('/authorities', authorities.read)
 
-app.delete('/:id', users.remove)
-app.get('/:id', users.read)
+app.delete('/:login', users.remove)
+app.get('/:login', users.read)
 
 // Listen on app port
 app.listen(config.appPort, () =>

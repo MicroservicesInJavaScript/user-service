@@ -33,7 +33,7 @@ users.add = (req, res) => MongoClient.connect(config.mongoURL, (err, db) => {
 
 users.update = (req, res) => MongoClient.connect(config.mongoURL, (err, db) => {
   if (err) throw err
-  db.collection(config.userCollection).replaceOne({ _id: req.body.id }, req.body, function (err2, result) {
+  db.collection(config.userCollection).replaceOne({ login: req.params.login }, req.body, function (err2, result) {
   if (err2) throw err2;
     res.json(result)
     db.close()
@@ -43,7 +43,7 @@ users.update = (req, res) => MongoClient.connect(config.mongoURL, (err, db) => {
 users.remove = (req, res) => MongoClient.connect(config.mongoURL, (err, db) => {
   if (err) throw err
   try {
-   db.collection(config.userCollection).deleteOne({ _id: req.params.login });
+   db.collection(config.userCollection).deleteOne({ login: req.params.login });
   } catch (e) {
      print(e);
   }
