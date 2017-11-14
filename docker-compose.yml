@@ -20,4 +20,4 @@ services:
     volumes:
       - ./seed_data:/seed_data
     command:
-      'bash -c "mongoimport --host db --db user_service --collection users --type json --file /seed_data/users.json --jsonArray"'
+      'bash -c "mongoimport --host db --db user_service --collection users --type json --file /seed_data/users.json --jsonArray && mongoimport --host db --db user_service --collection authorities --type json --file /seed_data/authorities.json --jsonArray "'
