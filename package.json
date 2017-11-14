@@ -1,7 +1,11 @@
 {
   "scripts": {
     "dev": "yarn run doc && nodemon src/index.js",
-    "doc": "jsdoc -c .jsdoc src/*"
+    "doc": "jsdoc -c .jsdoc src/*",
+    "build": "docker-compose up -d --build",
+    "lint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "lint": "eslint ./src/*.js ./src/**/*.js",
+    "lint-fix": "eslint ./src/*.js ./src/**/*.js --fix"
   },
   "dependencies": {
     "express": "^4.16.2",
@@ -9,6 +13,13 @@
   },
   "devDependencies": {
     "jsdoc": "^3.5.5",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "eslint": "^4.11.0",
+    "eslint-config-prettier": "^2.7.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "prettier": "^1.8.2"
   }
 }
