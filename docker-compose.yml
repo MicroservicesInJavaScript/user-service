@@ -4,6 +4,12 @@ services:
     container_name: user_service_app
     restart: always
     build: .
+    volumes:
+      - ./src:/usr/app/src
+      - ./logs:/logs
+    environment:
+      - REQUST_LOGGER_PATH="/logs/request-logs"
+      - SERVER_LOGGER_PATH="/logs/server-logs"
     ports:
       - "3000:3000"
     links:
@@ -20,4 +26,4 @@ services:
     volumes:
       - ./seed_data:/seed_data
     command:
-      'bash -c "mongoimport --host db --db user_service --collection users --type json --file /seed_data/users.json --jsonArray"'
+      'bash -c "mongoimport --host db --db user_service --collection users --type json --file /seed_data/users.json --jsonArray && mongoimport --host db --db user_service --collection authorities --type json --file /seed_data/authorities.json --jsonArray "'

@@ -2,13 +2,16 @@
   "scripts": {
     "dev": "yarn run doc && nodemon src/index.js",
     "doc": "jsdoc -c .jsdoc src/*",
-    "build": "docker-compose up -d --build",
+    "build": "yarn start -- -d --build",
+    "start": "docker-compose up",
     "lint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "eslint --ext js ./src",
-    "lint-fix": "yarn run lint -- --fix"
+    "lint-fix": "yarn run lint -- --fix",
+    "test": "npm -v"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
     "morgan": "^1.9.0",
