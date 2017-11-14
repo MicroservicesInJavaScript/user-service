@@ -8,8 +8,12 @@ To start the user service, run the following command in the project root:
 # Install deps
 yarn
 
-# Run as dev
-yarn dev
+# Build docker containers
+yarn build
+
+# Teardown docker containers
+yarn teardown
+
 ```
 
 ## Available APIs
