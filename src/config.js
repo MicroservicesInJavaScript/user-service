@@ -1,5 +1,5 @@
 module.exports = {
-  mongoURL: 'mongodb://localhost:27017/monolith',
-  mongoCollection: 'jhi_user',
+  mongoURL: "mongodb://db:27017/user_service",
+  mongoCollection: "users",
   appPort: 3000
-}
+};

@@ -1,25 +1,34 @@
-const MongoClient = require('mongodb').MongoClient
-const config = require('../config')
-const { error } = require('../services/logger');
+const MongoClient = require("mongodb").MongoClient;
 
-const users = {}
+const config = require("../config");
+const { error } = require("../services/logger");
 
-users.list = (req, res) => MongoClient.connect(config.mongoURL, (err, db) => {
-  if (err) error(err);
-  db.collection(config.mongoCollection).find().toArray((err, result) => {
+const users = {};
+
+users.list = (req, res) =>
+  MongoClient.connect(config.mongoURL, (err, db) => {
     if (err) error(err);
-    res.json(result)
-    db.close()
-  })
-})
+    db
+      .collection(config.mongoCollection)
+      .find()
+      .toArray((err, result) => {
+        if (err) error(err);
+        res.json(result);
+        db.close();
+      });
+  });
 
-users.read = (req, res) => MongoClient.connect(config.mongoURL, (err, db) => {
-  if (err) error(err);
-  db.collection(config.mongoCollection).find({ _id: req.params.id }).toArray((err, result) => {
+users.read = (req, res) =>
+  MongoClient.connect(config.mongoURL, (err, db) => {
     if (err) error(err);
-    res.json(result)
-    db.close()
-  })
-})
+    db
+      .collection(config.mongoCollection)
+      .find({ _id: req.params.id })
+      .toArray((err, result) => {
+        if (err) error(err);
+        res.json(result);
+        db.close();
+      });
+  });
 
-module.exports = users
+module.exports = users;
