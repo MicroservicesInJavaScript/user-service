@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: docker:17.05.0-ce-git
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -38,15 +38,24 @@ jobs:
 
       - setup_remote_docker
 
-      - type: shell
-        name: Install Docker Client
-        command: |
-          curl -L -o /tmp/docker.tgz https://get.docker.com/builds/Linux/x86_64/docker-1.12.3.tgz
-          tar -xz -C /tmp -f /tmp/docker.tgz
-          mv /tmp/docker/docker* /usr/bin/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
 
-          curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
-          sudo chmod +x  /usr/bin/docker-compose
+      # - type: shell
+      #   name: Install Docker Client
+      #   command: |
+      #     curl -L -o /tmp/docker.tgz https://get.docker.com/builds/Linux/x86_64/docker-1.12.3.tgz
+      #     tar -xz -C /tmp -f /tmp/docker.tgz
+      #     mv /tmp/docker/docker* /usr/bin/
+      #
+      #     curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
+      #     sudo chmod +x  /usr/bin/docker-compose
 
       # # This should go into custom primary image, here's only for the sake of explanation
       # - run:
