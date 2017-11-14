@@ -1,5 +1,7 @@
 const morgan = require('morgan');
 
+const stream = require('../services/logstream');
+
 module.exports = [
-  morgan('combined'),
+  morgan('combined', { stream: stream }),
 ];
