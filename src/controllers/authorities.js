@@ -1,19 +1,26 @@
-const MongoClient = require("mongodb").MongoClient;
-const config = require("../config");
+const { MongoClient } = require("mongodb");
 
-const authorities = {};
+const { MONGO_URL } = process.env;
 
-authorities.read = (req, res) =>
-  MongoClient.connect(config.mongoURL, (err, db) => {
-    if (err) throw err;
+const { authorities } = require("../models");
+const { error } = require("../services/logger");
+
+const endpoint = {};
+
+endpoint.read = (req, res) =>
+  MongoClient.connect(MONGO_URL, (err, db) => {
+    if (err) error(err);
+
     db
-      .collection(config.authorityCollection)
+      .collection(authorities)
       .find()
       .toArray((err, result) => {
-        if (err) throw err;
+        if (err) error(err);
+
+
         res.json(result);
         db.close();
       });
   });
 
-module.exports = authorities;
+module.exports = endpoint;

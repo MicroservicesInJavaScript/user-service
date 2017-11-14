@@ -5,13 +5,14 @@ FROM node:9.1.0-alpine
 RUN apk add --update curl
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
 # Bundle app source
 COPY . .
 
 # Install the app dependencies
-RUN npm install
+RUN mkdir /logs && \
+  yarn
 
 # Expose the correct port
 EXPOSE 3000
@@ -20,4 +21,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=5s --retries=10 CMD curl -f -s http://localhost:3000/status || exit 1
 
 # Run the app
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "run", "dev"]
