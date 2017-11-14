@@ -4,10 +4,10 @@ services:
     container_name: user_service_app
     restart: always
     build: .
-    # volumes:
-    #   - ./src:/usr/app/src
-    #   - ./request-logs:/usr/app/request-logs
-    #   - ./server-logs:/usr/app/server-logs
+    volumes:
+      - ./src:/usr/app/src
+      - ./request-logs:/usr/app/request-logs
+      - ./server-logs:/usr/app/server-logs
     ports:
       - "3000:3000"
     links:
