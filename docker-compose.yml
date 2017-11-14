@@ -1,0 +1,23 @@
+version: "2"
+services:
+  app:
+    container_name: user_service_app
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - db
+  db:
+    image: mongo:3.2.10
+    container_name: user_service_db
+    ports:
+      - "27017:27017"
+  db-seed:
+    image: mongo:3.2.10
+    links:
+      - db
+    volumes:
+      - ./seed_data:/seed_data
+    command:
+      'bash -c "mongoimport --host db --db user_service --collection users --type json --file /seed_data/users.json --jsonArray"'
