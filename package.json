@@ -5,9 +5,11 @@
     "build": "docker-compose up -d --build",
     "lint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "eslint ./src/*.js ./src/**/*.js",
-    "lint-fix": "eslint ./src/*.js ./src/**/*.js --fix"
+    "lint-fix": "eslint ./src/*.js ./src/**/*.js --fix",
+    "test": "npm -v"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongodb": "^2.2.33"
   },
