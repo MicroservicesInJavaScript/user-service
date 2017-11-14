@@ -4,6 +4,6 @@
         "excludePattern": ".+spec.+"
     },
     "opts": {
-        "destination": "./docs/jsdoc"
+        "destination": "./src/api-docs"
     }
 }

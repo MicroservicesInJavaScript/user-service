@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "doc": "jsdoc -c .jsdoc src/*"
   },
   "dependencies": {
@@ -8,6 +8,7 @@
     "mongodb": "^2.2.33"
   },
   "devDependencies": {
-    "jsdoc": "^3.5.5"
+    "jsdoc": "^3.5.5",
+    "nodemon": "^1.12.1"
   }
 }
