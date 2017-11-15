@@ -33,6 +33,9 @@ jobs:
       - run:
           name: Run Tests
           command: docker exec -it user_service_app yarn test
+      - run:
+          name: Test Coverage
+          command: docker exec -it user_service_app yarn test-coverage
       - deploy:
           name: Build and push Docker image
           command: |
