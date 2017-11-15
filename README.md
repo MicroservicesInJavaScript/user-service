@@ -26,15 +26,15 @@ yarn dev
 
 ## Logging
 
+Logging for both Access and Server are integrated. Location of logs, enabling/disabling, and setting the logging interval are set via enviromental variables.
+
 ### Access Logging
 
 This is handled by [morgan](https://github.com/expressjs/morgan). No config should be required.
 
-Location of these logs are stored in the location set via the env var `REQUEST_LOGGER_PATH`
-
 ### Server Logging
 
-This is done using the [pino package](https://github.com/pinojs/pino) and is configures in [services/logger.js](./src/services/logger.js)
+This is done using the [pino package](https://github.com/pinojs/pino) and is configured in [services/logger.js](./src/services/logger.js)
 
 To bring logging into your module:
 
@@ -57,8 +57,6 @@ if (true) {
   pino.info('Your info message or...', infoObject);
 }
 ```
-
-Location of these logs are stored in the location set via the env var `SERVER_LOGGER_PATH`
 
 ## API Documentation
 
