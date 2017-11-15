@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
