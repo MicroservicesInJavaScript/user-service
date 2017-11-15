@@ -22,11 +22,10 @@ endpoint.read = (req, res, mongoDB) =>
     });
 
 endpoint.add = (req, res, mongoDB) =>
-  mongoDB.collection(users)
-    .insert(req.body, (err, result) => {
-      if (err) error(err);
-      res.json(result);
-    });
+  mongoDB.collection(users).insert(req.body, (err, result) => {
+    if (err) error(err);
+    res.json(result);
+  });
 
 endpoint.update = (req, res, mongoDB) =>
   mongoDB

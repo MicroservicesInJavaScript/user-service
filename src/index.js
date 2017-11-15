@@ -18,7 +18,6 @@ app.use("/docs", express.static(path.join(__dirname, "api-docs")));
 // Health check endpoint
 app.get("/status", (req, res) => res.status(200).send("OK"));
 
-
 MongoClient.connect(MONGO_URL, (err, db) => {
   if (err) error(err);
 
@@ -44,7 +43,7 @@ MongoClient.connect(MONGO_URL, (err, db) => {
   });
 
   app.get("/authorities", (req, res) => {
-      return authorities.read(req, res, db);
+    return authorities.read(req, res, db);
   });
 
   // Listen on app port
