@@ -15,6 +15,12 @@ const { MONGO_URL, PORT } = process.env;
 const app = express();
 app.use(middleware);
 
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
 // Api Docs endpoint
 app.use("/docs", express.static(path.join(__dirname, "api-docs")));
 
