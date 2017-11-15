@@ -6,17 +6,15 @@ services:
     build: .
     ports:
       - "3000:3000"
-    links:
-      - db
+
   db:
     image: mongo:3.2.10
     container_name: user_service_db
     ports:
       - "27017:27017"
+
   db-seed:
     image: mongo:3.2.10
-    links:
-      - db
     volumes:
       - ./seed_data:/seed_data
     command:

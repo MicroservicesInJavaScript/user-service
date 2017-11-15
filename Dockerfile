@@ -11,8 +11,7 @@ WORKDIR /usr/app
 COPY . .
 
 # Install the app dependencies
-RUN mkdir /logs && \
-  yarn
+RUN yarn
 
 # Expose the correct port
 EXPOSE 3000
@@ -21,4 +20,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=5s --retries=10 CMD curl -f -s http://localhost:3000/status || exit 1
 
 # Run the app
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "start"]
