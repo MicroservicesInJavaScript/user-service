@@ -3,8 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 
-// creates Mongo Client
-require("./models/db").connect(() => {});
+require("./models/db").connect(); // creates Mongo Client
 
 const { error } = require("./services/logger");
 const middleware = require("./middleware");

@@ -1,4 +1,3 @@
-const config = require("../config");
 const mockedDB = require("./__mocks__/db_mock");
 
 const users = require("../controllers/users.js");

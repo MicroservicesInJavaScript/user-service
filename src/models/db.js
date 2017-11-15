@@ -1,34 +1,42 @@
 const { MongoClient } = require("mongodb");
 const { MONGO_URL } = process.env;
 
-const state = { db: null };
+const logger = require("../services/logger");
 
-exports.connect = done => {
-  if (state.db) return done();
+const messages = {
+  connection: {
+    failed: "Requested DB Operation Failed",
+    created: "Connection to DB Created",
+    active: "Already connected to DB",
+    closed: "Connection to DB Closed"
+  }
+};
 
-  MongoClient.connect(MONGO_URL, (err, db) => {
-    if (err) {
-      error(err);
+let dbConnectionInstance;
 
-      return done();
-    }
+exports.connect = () => {
+  if (dbConnectionInstance) return logger.info(messages.connection.active);
 
-    state.db = db;
-    done();
+  MongoClient.connect(MONGO_URL, function(err, db) {
+    if (err) logger.error(messages.connection.failed, err);
+
+    dbConnectionInstance = db;
+
+    logger.info(messages.connection.created);
   });
 };
 
 exports.dbConnection = () => {
-  return state.db;
+  return dbConnectionInstance;
 };
 
-exports.close = done => {
-  if (state.db) {
-    state.db.close((err, result) => {
-      state.db = null;
-      state.mode = null;
+exports.close = () => {
+  if (dbConnectionInstance) {
+    dbConnectionInstance.close((err, result) => {
+      dbConnectionInstance = null;
+      if (err) logger.error(messages.connection.failed, err);
 
-      done(err);
+      logger.info(messages.connection.closed, result);
     });
   }
 };
