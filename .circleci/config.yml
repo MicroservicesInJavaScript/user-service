@@ -40,8 +40,8 @@ jobs:
           name: Tag and push Docker image
           command: |
             TAG="0.1.${CIRCLE_BUILD_NUM}"
-            docker tag user_service_app:latest microservicesinjavascript/user-service:$TAG
-            docker tag user_service_app:latest microservicesinjavascript/user-service:latest
+            docker tag user_service_app microservicesinjavascript/user-service:$TAG
+            docker tag user_service_app microservicesinjavascript/user-service:latest
             docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
             docker push microservicesinjavascript/user-service:$TAG
             docker push microservicesinjavascript/user-service:latest
