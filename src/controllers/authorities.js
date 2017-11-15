@@ -1,10 +1,11 @@
-const { authorities } = require("../models");
+const { dbConnection } = require("../models/db");
+const { authorities } = require("../models/collections");
 const { error } = require("../services/logger");
 
 const endpoint = {};
 
-endpoint.read = (req, res, mongoDB) => {
-  mongoDB
+endpoint.read = (req, res) =>
+  dbConnection()
     .collection(authorities)
     .find()
     .toArray((err, result) => {
@@ -12,6 +13,5 @@ endpoint.read = (req, res, mongoDB) => {
 
       res.json(result);
     });
-};
 
 module.exports = endpoint;

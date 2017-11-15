@@ -1,0 +1,21 @@
+version: "2"
+services:
+  app:
+    extends:
+      file: docker-compose.yml
+      service: app
+    links:
+      - db
+
+  db:
+    extends:
+      file: docker-compose.yml
+      service: db
+
+  db-seed:
+    extends:
+      file: docker-compose.yml
+      service: db-seed
+    links:
+      - db
+
