@@ -7,11 +7,11 @@ services:
     volumes:
       - ./request-logs:/usr/app/request-logs
       - ./server-logs:/usr/app/server-logs
-      - ./src:/usr/app/src
+      - ./src:/usr/app/src:ro
       - ./yarn.lock:/usr/app/yarn.lock
     links:
       - db
-    command: yarn watch
+    command: 'sh -c "cat /tmp/yarn.lock > yarn.lock && yarn watch"'
 
   db:
     extends:

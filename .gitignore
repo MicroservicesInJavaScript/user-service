@@ -2,5 +2,6 @@ node_modules
 request-logs
 server-logs
 src/api-docs
+coverage
+
 yarn-error.log
-coverage/
