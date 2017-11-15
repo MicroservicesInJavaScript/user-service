@@ -17,7 +17,7 @@ endpoint.list = (req, res) =>
 endpoint.read = (req, res) =>
   dbConnection()
     .collection(users)
-    .find({ _id: req.params.id })
+    .find({ login: req.params.login })
     .toArray((err, result) => {
       if (err) error(err);
 
