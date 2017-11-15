@@ -2,12 +2,12 @@
   "scripts": {
     "dev": "yarn run doc && nodemon src/index.js",
     "doc": "jsdoc -c .jsdoc src/*",
-    "build": "yarn start -- -d --build",
-    "start": "docker-compose up",
+    "build": "docker-compose up -d --build",
+    "start": "node src/index.js",
     "lint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "eslint --ext js ./src",
     "lint-fix": "yarn run lint -- --fix",
-    "test": "npm -v",
+    "test": "jest",
     "teardown": "docker-compose down"
   },
   "pre-commit": [
