@@ -1,87 +1,49 @@
-const { MongoClient } = require("mongodb");
-
-const { MONGO_URL } = process.env;
-
 const { users } = require("../models");
 const { error } = require("../services/logger");
 
 const endpoint = {};
 
-endpoint.list = (req, res) =>
-  MongoClient.connect(MONGO_URL, (err, db) => {
+endpoint.list = (req, res, mongoDB) =>
+  mongoDB
+    .collection(users)
+    .find()
+    .toArray((err, result) => {
+      if (err) error(err);
+      res.json(result);
+    });
+
+endpoint.read = (req, res, mongoDB) =>
+  mongoDB
+    .collection(users)
+    .find({ _id: req.params.id })
+    .toArray((err, result) => {
+      if (err) error(err);
+      res.json(result);
+    });
+
+endpoint.add = (req, res, mongoDB) =>
+  mongoDB.collection(users).insert(req.body, (err, result) => {
     if (err) error(err);
-
-    db
-      .collection(users)
-      .find()
-      .toArray((err, result) => {
-        if (err) error(err);
-
-        res.json(result);
-        db.close();
-      });
+    res.json(result);
   });
 
-endpoint.read = (req, res) =>
-  MongoClient.connect(MONGO_URL, (err, db) => {
-    if (err) error(err);
-    console.log(req.params.login);
-
-    db
-      .collection(users)
-      .find({ login: req.params.login })
-      .toArray((err, result) => {
-        if (err) error(err);
-
-        res.json(result);
-        db.close();
-      });
-  });
-
-endpoint.add = (req, res) =>
-  MongoClient.connect(MONGO_URL, (err, db) => {
-    if (err) error(err);
-
-    db.collection(users).insert(req.body, function(err2, result) {
-      if (err2) throw err2;
+endpoint.update = (req, res, mongoDB) =>
+  mongoDB
+    .collection(users)
+    .replaceOne({ login: req.body.login }, req.body, (replaceError, result) => {
+      if (replaceError) error(replaceError);
 
       res.json(result);
-      db.close();
     });
-  });
 
-endpoint.update = (req, res) =>
-  MongoClient.connect(MONGO_URL, (err, db) => {
-    if (err) error(err);
-    console.log(req.body.login);
+endpoint.remove = (req, res, mongoDB) => {
+  try {
+    mongoDB.collection(users).deleteOne({ login: req.params.login });
 
-    db
-      .collection(users)
-      .replaceOne({ login: req.body.login }, req.body, function(
-        replaceError,
-        result
-      ) {
-        if (replaceError) throw replaceError;
-
-        res.json(result);
-        db.close();
-      });
-  });
-
-endpoint.remove = (req, res) =>
-  MongoClient.connect(MONGO_URL, (err, db) => {
-    if (err) error(err);
-    console.log(req.params.login);
-
-    try {
-      db.collection(users).deleteOne({ login: req.params.login });
-
-      res.status(200).send("OK");
-    } catch (e) {
-      print(e);
-    }
-
-    db.close();
-  });
+    res.status(200).send("OK");
+  } catch (e) {
+    print(e);
+  }
+};
 
 module.exports = endpoint;

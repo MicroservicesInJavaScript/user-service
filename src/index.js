@@ -1,32 +1,53 @@
 require("dotenv").config();
 
-const path = require("path");
 const express = require("express");
-
+const path = require("path");
+const { MongoClient } = require("mongodb");
 const middleware = require("./middleware");
-const users = require("./controllers/users");
 const authorities = require("./controllers/authorities");
-
-const { PORT } = process.env;
+const users = require("./controllers/users");
+const { error } = require("./services/logger");
+const { MONGO_URL, PORT } = process.env;
 
 const app = express();
-
 app.use(middleware);
 
+// Api Docs endpoint
 app.use("/docs", express.static(path.join(__dirname, "api-docs")));
 
 // Health check endpoint
 app.get("/status", (req, res) => res.status(200).send("OK"));
 
-// User APIs
-app.get("/", users.list);
-app.post("/", users.add);
-app.put("/", users.update);
+MongoClient.connect(MONGO_URL, (err, db) => {
+  if (err) error(err);
 
-app.get("/authorities", authorities.read);
+  // User APIs
+  app.get("/", (req, res) => {
+    return users.list(req, res, db);
+  });
 
-app.delete("/:login", users.remove);
-app.get("/:login", users.read);
+  app.post("/", (req, res) => {
+    return users.add(req, res, db);
+  });
 
-// Listen on app port
-app.listen(PORT, () => console.log(`Users API app listening on port ${PORT}!`));
+  app.put("/", (req, res) => {
+    return users.update(req, res, db);
+  });
+
+  app.delete("/:login", (req, res) => {
+    return users.remove(req, res, db);
+  });
+
+  app.get("/:login", (req, res) => {
+    return users.read(req, res, db);
+  });
+
+  app.get("/authorities", (req, res) => {
+    return authorities.read(req, res, db);
+  });
+
+  // Listen on app port
+  app.listen(PORT, () =>
+    console.log(`Users API app listening on port ${PORT}!`)
+  );
+});
