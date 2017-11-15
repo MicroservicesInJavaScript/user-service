@@ -30,6 +30,9 @@ jobs:
             docker-compose up -d
             docker ps -a
             docker run --network container:user_service_app appropriate/curl -fs --retry 10 --retry-delay 6 --retry-connrefused http://localhost:3000/status
+      - run:
+          name: Run Tests
+          command: docker exec -it user_service_app yarn test
       - deploy:
           name: Build and push Docker image
           command: |
