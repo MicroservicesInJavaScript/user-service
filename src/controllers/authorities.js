@@ -12,6 +12,6 @@ endpoint.read = (req, res, mongoDB) => {
 
       res.json(result);
     });
-  };
+};
 
 module.exports = endpoint;
