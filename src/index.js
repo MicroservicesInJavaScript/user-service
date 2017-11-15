@@ -1,8 +1,11 @@
-require("dotenv").config();
-
 const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
+
+if (process.env.NODE_ENV !== 'production') {
+  require("dotenv").config();
+}
+
 const middleware = require("./middleware");
 const authorities = require("./controllers/authorities");
 const users = require("./controllers/users");
