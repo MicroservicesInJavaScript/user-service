@@ -15,11 +15,14 @@ const { MONGO_URL, PORT } = process.env;
 const app = express();
 app.use(middleware);
 
-var bodyParser = require('body-parser')
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-})); 
+var bodyParser = require("body-parser");
+app.use(bodyParser.json()); // to support JSON-encoded bodies
+app.use(
+  bodyParser.urlencoded({
+    // to support URL-encoded bodies
+    extended: true
+  })
+);
 
 // Api Docs endpoint
 app.use("/docs", express.static(path.join(__dirname, "api-docs")));
@@ -31,16 +34,8 @@ MongoClient.connect(MONGO_URL, (err, db) => {
   if (err) error(err);
 
   // User APIs
-  app.get("/", (req, res) => {
-    return users.list(req, res, db);
-  });
-
-  app.post("/", (req, res) => {
-    return users.add(req, res, db);
-  });
-
-  app.put("/", (req, res) => {
-    return users.update(req, res, db);
+  app.get("/authorities", (req, res) => {
+    return authorities.read(req, res, db);
   });
 
   app.delete("/:login", (req, res) => {
@@ -51,8 +46,16 @@ MongoClient.connect(MONGO_URL, (err, db) => {
     return users.read(req, res, db);
   });
 
-  app.get("/authorities", (req, res) => {
-    return authorities.read(req, res, db);
+  app.get("/", (req, res) => {
+    return users.list(req, res, db);
+  });
+
+  app.post("/", (req, res) => {
+    return users.add(req, res, db);
+  });
+
+  app.put("/", (req, res) => {
+    return users.update(req, res, db);
   });
 
   // Listen on app port

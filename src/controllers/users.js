@@ -35,7 +35,7 @@ endpoint.update = (req, res, mongoDB) => {
 
       res.json(result);
     });
-  };
+};
 
 endpoint.remove = (req, res, mongoDB) => {
   try {

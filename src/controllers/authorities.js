@@ -3,7 +3,7 @@ const { error } = require("../services/logger");
 
 const endpoint = {};
 
-endpoint.read = (req, res, mongoDB) =>
+endpoint.read = (req, res, mongoDB) => {
   mongoDB
     .collection(authorities)
     .find()
@@ -12,5 +12,6 @@ endpoint.read = (req, res, mongoDB) =>
 
       res.json(result);
     });
+  };
 
 module.exports = endpoint;
