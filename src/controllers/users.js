@@ -1,4 +1,3 @@
-const config = require("../config");
 const { users } = require("../models");
 const { error } = require("../services/logger");
 
@@ -6,33 +5,34 @@ const endpoint = {};
 
 endpoint.list = (req, res, mongoDB) =>
   mongoDB
-    .collection(config.userCollection)
+    .collection(users)
     .find()
     .toArray((err, result) => {
-      if (err) throw err;
+      if (err) error(err);
       res.json(result);
     });
 
 endpoint.read = (req, res, mongoDB) =>
   mongoDB
-    .collection(config.userCollection)
+    .collection(users)
     .find({ _id: req.params.id })
     .toArray((err, result) => {
-      if (err) throw err;
+      if (err) error(err);
       res.json(result);
     });
 
 endpoint.add = (req, res, mongoDB) =>
-  mongoDB.collection(users).insert(req.body, (err2, result) => {
-    if (err2) throw err2;
-    res.json(result);
-  });
+  mongoDB.collection(users)
+    .insert(req.body, (err, result) => {
+      if (err) error(err);
+      res.json(result);
+    });
 
 endpoint.update = (req, res, mongoDB) =>
   mongoDB
     .collection(users)
     .replaceOne({ login: req.body.login }, req.body, (replaceError, result) => {
-      if (replaceError) throw replaceError;
+      if (replaceError) error(replaceError);
 
       res.json(result);
     });
