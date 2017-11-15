@@ -39,6 +39,7 @@ jobs:
       - deploy:
           name: Tag and push Docker image
           command: |
+            docker images
             TAG="0.1.${CIRCLE_BUILD_NUM}"
             docker tag user_service_app microservicesinjavascript/user-service:$TAG
             docker tag user_service_app microservicesinjavascript/user-service:latest
