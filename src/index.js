@@ -3,50 +3,50 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const middleware = require("./middleware");
-const config = require('./config')
-const MongoClient = require('mongodb').MongoClient()
+const { MongoClient } = require("mongodb");
+const { MONGO_URL, PORT } = process.env;
 const authorities = require("./controllers/authorities");
-
-const { PORT } = process.env;
 
 const app = express();
 app.use(middleware);
 
 // Load Controllers
-const users = require('./controllers/users')
-MongoClient.connect(config.mongoURL, (err, db) => {
-    if (err) throw err
+const users = require("./controllers/users");
 
-    // Api Docs endpoint
-    app.use("/docs", express.static(path.join(__dirname, "api-docs")));
+MongoClient.connect(MONGO_URL, (err, db) => {
+  if (err) throw err;
 
-    // Health check endpoint
-    app.get('/status', (req, res) => res.status(200).send('OK'))
+  // Api Docs endpoint
+  app.use("/docs", express.static(path.join(__dirname, "api-docs")));
 
-    // User APIs
-    app.get("/", (req, res) => {
-        return users.list(req, res, db);
-    });
+  // Health check endpoint
+  app.get("/status", (req, res) => res.status(200).send("OK"));
 
-    app.post("/", (req, res) => {
-        return users.add(req, res, db);
-    });
+  // User APIs
+  app.get("/", (req, res) => {
+    return users.list(req, res, db);
+  });
 
-    app.put("/", (req, res) => {
-        return users.update(req, res, db);
-    });
+  app.post("/", (req, res) => {
+    return users.add(req, res, db);
+  });
 
-    app.delete("/:login", (req, res) => {
-        return users.remove(req, res, db);
-    });
+  app.put("/", (req, res) => {
+    return users.update(req, res, db);
+  });
 
-    app.get("/:login", (req, res) => {
-        return users.read(req, res, db);
-    });
+  app.delete("/:login", (req, res) => {
+    return users.remove(req, res, db);
+  });
 
-    app.get("/authorities", authorities.read);
-    // Listen on app port
-    app.listen(config.appPort, () =>
-        console.log(`Users API app listening on port ${config.appPort}!`)
-    );
+  app.get("/:login", (req, res) => {
+    return users.read(req, res, db);
+  });
+
+  app.get("/authorities", authorities.read);
+
+  // Listen on app port
+  app.listen(PORT, () =>
+    console.log(`Users API app listening on port ${PORT}!`)
+  );
 });
